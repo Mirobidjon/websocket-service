@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Sample of websocket with Golang</title>
+  </head>
+  <body>
+		<div id="text"></div>
+    <script>
+        var ws = new WebSocket("ws://localhost:8080/ws?token=thisisatoken");
+        ws.onmessage = function(e) {
+                    var d = document.createElement("div");
+            d.innerHTML = e.data;
+                    ws.send(e.data);
+            document.getElementById("text").appendChild(d);
+        }
+
+		ws.onclose = function(e){
+			var d = document.createElement("div");
+			d.innerHTML = "CLOSED";
+            document.getElementById("text").appendChild(d);
+		}
+    </script>
+  </body>
+</html>
