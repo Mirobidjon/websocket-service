@@ -7,7 +7,7 @@
   <body>
 		<div id="text"></div>
     <script>
-        var ws = new WebSocket("ws://localhost:8080/ws?token=thisisatoken");
+        var ws = new WebSocket("wss://ws.delever.uz/ws?token=thisisatoken");
         ws.onmessage = function(e) {
                     var d = document.createElement("div");
             d.innerHTML = e.data;
