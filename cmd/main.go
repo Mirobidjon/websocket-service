@@ -52,7 +52,7 @@ func main() {
 	log.Info("Websocket service started at " + cfg.HttpPort + "HTTP port")
 	log.Info("Websocket service started at " + cfg.RPCPort + "GRPC port")
 
-	sigCh := make(chan os.Signal)
+	sigCh := make(chan os.Signal, 1)
 	signal.Notify(sigCh, os.Interrupt)
 	<-sigCh
 	signal.Stop(sigCh)
