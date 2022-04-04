@@ -1,0 +1,10 @@
+syntax="proto3";
+
+package genproto;
+option go_package="genproto/websocket_service";
+
+import "websocket.proto";
+
+service WebSocketService {
+    rpc SendMessage(Message) returns (SendMessageResponse) {}
+}

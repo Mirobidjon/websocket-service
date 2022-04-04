@@ -1,0 +1,14 @@
+syntax="proto3";
+
+package genproto;
+option go_package="genproto/websocket_service";
+
+message Message {
+    string type = 1;
+    string content = 2;
+    string to = 3;
+}
+
+message SendMessageResponse {
+    int32 SuccessCount = 1;
+}

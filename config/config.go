@@ -13,6 +13,7 @@ type Config struct {
 	Environment string // develop, staging, production
 
 	HttpPort string
+	RPCPort  string
 }
 
 // Load loads environment vars and inflates Config
@@ -22,6 +23,7 @@ func Load() Config {
 	c.Environment = cast.ToString(getOrReturnDefault("ENVIRONMENT", "develop"))
 
 	c.HttpPort = cast.ToString(getOrReturnDefault("HTTP_PORT", ":8080"))
+	c.RPCPort = cast.ToString(getOrReturnDefault("RPC_PORT", ":5002"))
 
 	return c
 }

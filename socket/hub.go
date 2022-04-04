@@ -23,25 +23,28 @@ func NewHub(log logger.Logger) *Hub {
 	}
 }
 
-func (h *Hub) Send(msg Message) {
+func (h *Hub) Send(msg Message) int32 {
+	var count int32
 	for c := range h.clients {
 		switch msg.Type {
 		case "broadcast":
-			c.Send(msg)
+			count += c.Send(msg)
 		case "room":
 			if c.roomId == msg.To {
-				c.Send(msg)
+				count += c.Send(msg)
 			}
 		case "user":
 			if c.userId == msg.To {
-				c.Send(msg)
+				count += c.Send(msg)
 			}
 		default:
 			if c.sessionId == msg.To {
-				c.Send(msg)
+				count += c.Send(msg)
 			}
 		}
 	}
+
+	return count
 }
 
 func (h *Hub) Run() {

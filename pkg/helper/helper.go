@@ -18,7 +18,7 @@ func ParseTime(timeString string) (time.Time, error) {
 	return resp, err
 }
 
-func ParseToStruct(data interface{}, m protoiface.MessageV1) error {
+func ProtoToStruct(data interface{}, m protoiface.MessageV1) error {
 	var jspbMarshal jsonpb.Marshaler
 
 	jspbMarshal.OrigName = true
@@ -33,7 +33,7 @@ func ParseToStruct(data interface{}, m protoiface.MessageV1) error {
 	return err
 }
 
-func ParseToProto(m protoiface.MessageV1, data interface{}) error {
+func StructToProto(m protoiface.MessageV1, data interface{}) error {
 	var jspbUnmarshal jsonpb.Unmarshaler
 	js, err := json.Marshal(data)
 	if err != nil {

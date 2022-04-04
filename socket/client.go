@@ -9,9 +9,9 @@ import (
 )
 
 type Message struct {
-	Type string `json:"type"`
-	Data string `json:"data"`
-	To   string `json:"to"`
+	Type    string `json:"type"`
+	Content string `json:"data"`
+	To      string `json:"to"`
 }
 
 type Client struct {
@@ -36,15 +36,15 @@ func NewClient(conn *fastws.Conn, hub *Hub, sessionId, roomId, userId string, lo
 	}
 }
 
-func (c *Client) Send(msg Message) {
+func (c *Client) Send(msg Message) int32 {
 	if c.closed {
-		return
+		return 0
 	}
 
 	js, err := json.Marshal(msg)
 	if err != nil {
 		c.log.Error("error marshaling message", logger.Error(err), logger.Any("message", msg))
-		return
+		return 0
 	}
 
 	_, err = c.conn.Write(js)
@@ -52,6 +52,8 @@ func (c *Client) Send(msg Message) {
 		c.log.Error("error writing message or connection closed", logger.Error(err), logger.Any("message", msg))
 		c.Close()
 	}
+
+	return 1
 }
 
 func (c *Client) Read() {
@@ -60,9 +62,9 @@ func (c *Client) Read() {
 	var err error
 
 	c.Send(Message{
-		Type: "ping",
-		Data: "ping",
-		To:   c.userId,
+		Type:    "ping",
+		Content: "ping",
+		To:      c.userId,
 	})
 
 	for {

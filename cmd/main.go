@@ -4,15 +4,19 @@
 package main
 
 import (
-	"fmt"
+	"net"
 	"os"
 	"os/signal"
 
 	"github.com/Mirobidjon/websocket-service/config"
+	pb "github.com/Mirobidjon/websocket-service/genproto/websocket_service"
+	"github.com/Mirobidjon/websocket-service/grpc/service"
 	"github.com/Mirobidjon/websocket-service/pkg/logger"
 	"github.com/Mirobidjon/websocket-service/router"
 	"github.com/Mirobidjon/websocket-service/socket"
 	"github.com/valyala/fasthttp"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 func main() {
@@ -26,11 +30,30 @@ func main() {
 		Handler: router.Handler,
 	}
 
+	lis, err := net.Listen("tcp", cfg.RPCPort)
+	if err != nil {
+		log.Error("error while listening: %v", logger.Error(err))
+		return
+	}
+
+	websocketService := service.NewWebsocketService(log, hub)
+
+	s := grpc.NewServer()
+	reflection.Register(s)
+
+	pb.RegisterWebSocketServiceServer(s, websocketService)
+
 	go server.ListenAndServe(cfg.HttpPort)
 	go hub.Run()
 
-	fmt.Println("Websocket service started at " + cfg.HttpPort)
-	fmt.Println("Visit http://localhost:8080")
+	go func() {
+		if err := s.Serve(lis); err != nil {
+			log.Error("error while listening: %v", logger.Error(err))
+		}
+	}()
+
+	log.Info("Websocket service started at " + cfg.HttpPort + "HTTP port")
+	log.Info("Websocket service started at " + cfg.RPCPort + "GRPC port")
 
 	sigCh := make(chan os.Signal)
 	signal.Notify(sigCh, os.Interrupt)
