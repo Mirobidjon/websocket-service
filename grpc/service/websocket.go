@@ -3,10 +3,10 @@ package service
 import (
 	"context"
 
-	pb "github.com/Mirobidjon/websocket-service/genproto/websocket_service"
-	"github.com/Mirobidjon/websocket-service/pkg/helper"
-	"github.com/Mirobidjon/websocket-service/pkg/logger"
-	"github.com/Mirobidjon/websocket-service/socket"
+	pb "github.com/Mirobidjon/udevs_websocket_service/genproto/websocket_service"
+	"github.com/Mirobidjon/udevs_websocket_service/pkg/helper"
+	"github.com/Mirobidjon/udevs_websocket_service/pkg/logger"
+	"github.com/Mirobidjon/udevs_websocket_service/socket"
 )
 
 type websocketService struct {

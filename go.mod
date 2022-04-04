@@ -1,4 +1,4 @@
-module github.com/Mirobidjon/websocket-service
+module github.com/Mirobidjon/udevs_websocket_service
 
 go 1.17
 

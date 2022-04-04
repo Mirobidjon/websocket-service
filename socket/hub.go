@@ -1,7 +1,7 @@
 package socket
 
 import (
-	"github.com/Mirobidjon/websocket-service/pkg/logger"
+	"github.com/Mirobidjon/udevs_websocket_service/pkg/logger"
 	"github.com/dgrr/fastws"
 )
 

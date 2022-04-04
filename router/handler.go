@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/Mirobidjon/websocket-service/pkg/logger"
-	"github.com/Mirobidjon/websocket-service/socket"
+	"github.com/Mirobidjon/udevs_websocket_service/pkg/logger"
+	"github.com/Mirobidjon/udevs_websocket_service/socket"
 	"github.com/buaazp/fasthttprouter"
 	"github.com/dgrr/fastws"
 	"github.com/valyala/fasthttp"
